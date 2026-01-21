@@ -1,164 +1,320 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>link</title>
-  <style>
-    * { box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>adilt</title>
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #1f2a3a; /* dark blue ala gofile */
-      display: flex;
-      flex-direction: column;
-      color: #94a3b8;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    /* HEADER */
-    header {
-      height: 56px;
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      background: #1b2533;
-    }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #000;
+  color: #fff;
+}
 
-    .menu-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 6px;
-      background: #2563eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* ================= INTRO ================= */
+.intro {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.85),
+      rgba(0,0,0,.6),
+      rgba(0,0,0,.9)
+    ),
+    url("https://i.postimg.cc/RFX0NyZC/1706406758.webp") center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: introOut .8s ease forwards;
+  animation-delay: 2.4s;
+}
 
-    .menu-btn span,
-    .menu-btn span::before,
-    .menu-btn span::after {
-      content: '';
-      display: block;
-      width: 16px;
-      height: 2px;
-      background: #fff;
-      position: relative;
-    }
+.intro-title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+}
 
-    .menu-btn span::before { top: -5px; position: absolute; }
-    .menu-btn span::after { top: 5px; position: absolute; }
+.intro-title span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(25px);
+  animation: wordReveal .6s ease forwards;
+}
 
-    /* MAIN */
-    main {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.intro-title span:nth-child(1) { animation-delay: .2s; }
+.intro-title span:nth-child(2) { animation-delay: .7s; }
 
-    /* GOFILE-LIKE SPINNER */
-    .spinner {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: 5px solid transparent;
-      border-top-color: #3b82f6;
-      border-right-color: #3b82f6;
-      animation: spin 1s linear infinite;
-    }
+@keyframes wordReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+@keyframes introOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
 
-    /* FOOTER */
-    footer {
-      padding: 20px 0 30px;
-      text-align: center;
-      font-size: 14px;
-      background: #1b2533;
-    }
+/* ================= HERO ================= */
+.hero {
+  padding: 50px 20px 40px;
+  text-align: center;
+  background: linear-gradient(to bottom, #000, #0b0b0b);
+}
 
-    footer a {
-      display: block;
-      color: #94a3b8;
-      text-decoration: none;
-      margin: 6px 0;
-    }
-  </style>
+.hero-title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.video-wrapper {
+  max-width: 900px;
+  margin: auto;
+  aspect-ratio: 16 / 9;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  border: none;
+}
+
+/* ================= GRID ================= */
+.section {
+  padding: 40px 20px;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.movie-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 25px 55px rgba(0,0,0,.9);
+}
+
+.movie-card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.movie-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.9),
+    rgba(0,0,0,.4),
+    transparent
+  );
+}
+
+.movie-info {
+  position: absolute;
+  bottom: 0;
+  padding: 16px;
+  z-index: 2;
+}
+
+.movie-title {
+  font-weight: bold;
+}
+
+.movie-meta {
+  font-size: .8rem;
+  color: #ccc;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  font-size: .8rem;
+  color: #666;
+}
+</style>
 </head>
+
 <body>
 
-  <header>
-    <div class="menu-btn"><span></span></div>
-  </header>
-
-    <main id="content">
-    <div class="spinner" id="spinner"></div>
-  </main>
-
-  <footer>
-    <a href="#">Home</a>
-    <a href="#">Terms of Service</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Copyright</a>
-  </footer>
+<!-- ================= INTRO ================= -->
+<div class="intro">
+  <div class="intro-title">
+    <span>FEATURED</span><br>
+    <span>ADULT VIDEO</span>
+  </div>
+</div>
 
   <script>
-    // spinner tampil 2 detik lalu hilang
-    setTimeout(() => {
-      const spinner = document.getElementById('spinner');
-      spinner.style.opacity = '0';
-      spinner.style.transition = 'opacity 0.3s ease';
-    }, 2000);
+  atOptions = {
+    'key' : '64e783bd557c30cbf66293b5c5fda05f',
+    'format' : 'iframe',
+    'height' : 90,
+    'width' : 728,
+    'params' : {}
+  };
+</script>
+<script src="https://heroptionssideway.com/64e783bd557c30cbf66293b5c5fda05f/invoke.js"></script>
+  
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h1 class="hero-title">Now Playing</h1>
+
+  <div class="video-wrapper">
+    <iframe
+      id="mainVideo"
+      src="https://app.videas.fr/embed/media/ee1c5108-b3b2-40a1-a231-078ddf46bdc5/?autoplay=true&muted=true&controls=true"
+      allow="autoplay; fullscreen"
+      allowfullscreen>
+    </iframe>
+  </div>
+</section>
+
+<!-- ================= GRID ================= -->
+<section class="section">
+  <div class="movie-grid">
+
+    <div class="movie-card"
+      data-video="https://app.videas.fr/embed/media/557b602a-ab1e-4efd-8f49-37c94c2a3dd2/">
+      <img src="https://i.postimg.cc/Fzx40JZL/Picsart_25-10-12_12-20-14-931.jpg">
+      <div class="movie-info">
+        <div class="movie-title">angel ai xi</div>
+        <div class="movie-meta">adult</div>
+      </div>
+    </div>
+    
+
+    <div class="movie-card" data-video="https://app.videas.fr/embed/media/bbf27b9e-bb5c-4171-b7dd-b46208acb31b/">
+      <img src="https://i.postimg.cc/pdMTj2wk/IMG_20251114_134016.jpg">
+      <div class="movie-info">
+        <div class="movie-title">Nao jinguji</div>
+        <div class="movie-meta">Drama • 2023</div>
+      </div>
+    </div>
+    
+     <script async="async" data-cfasync="false" src="https://heroptionssideway.com/122b006ae61ef549a738f7e587027d5a/invoke.js"></script>
+<div id="container-122b006ae61ef549a738f7e587027d5a"></div>
+   
+    
+     <div class="movie-card" data-video="https://app.videas.fr/embed/media/796bb91e-e261-44c3-9f4c-50c4a4f50cfc/">
+
+      <img src="https://i.postimg.cc/2jd6096m/IMG_20251230_162156.jpg">
+
+      <div class="movie-info">
+
+        <div class="movie-title">Horny Hospital</div>
+
+        <div class="movie-meta">Doctor fuck</div>
+
+      </div>
+
+    </div>
+    
+     <div class="movie-card" data-video="https://app.videas.fr/embed/media/f4fd425c-2a53-488b-91b8-bf0ada7ab606/">
+
+      <img src="https://i.postimg.cc/Xv9gbj3v/IMG_20251210_235641.jpg">
+
+      <div class="movie-info">
+
+        <div class="movie-title">1 Mary Kitty - Forando Minha Irm A Transar Comigo</div>
+
+        <div class="movie-meta">sleep fuck</div>
+
+      </div>
+
+    </div>
+    
+     <div class="movie-card" data-video="https://app.videas.fr/embed/media/7cec8489-6a86-462b-93e2-3851a4a04bde/">
+
+      <img src="https://i.postimg.cc/nzn3Lk8b/IMG_20251206_132553.jpg">
+
+      <div class="movie-info">
+
+        <div class="movie-title">JUR-140</div>
+
+        <div class="movie-meta">My wife who insists that she was swamped by her friend's big who was afraid Aoi Ichino</div>
+
+      </div>
+
+    </div>
+    
+     <div class="movie-card" data-video="https://app.videas.fr/embed/media/e1180964-29e8-4725-9082-d589efeb35a5/">
+
+      <img src="https://i.postimg.cc/Y28zsDZC/IMG_20251013_175127.jpg">
+
+      <div class="movie-info">
+
+        <div class="movie-title">Lena Anderson</div>
+
+        <div class="movie-meta">Drama  Soothing </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<footer>© 2026 Epic Movie Landing</footer>
+
+<script>
+const cards = document.querySelectorAll(".movie-card");
+const mainVideo = document.getElementById("mainVideo");
+
+cards.forEach(card => {
+  card.onclick = () => {
+    mainVideo.src =
+      card.dataset.video + "?autoplay=true&muted=true&controls=true";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+});
+</script>
+   <script type="text/javascript">
+    var _Hasync = _Hasync || [];
+    _Hasync.push(['Histats.start', '1,4978236,4,107,170,20,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+      var hs = document.createElement('script');
+      hs.type = 'text/javascript';
+      hs.async = true;
+      hs.src = ('//s10.histats.com/js15_as.js');
+      (document.head || document.body).appendChild(hs);
+    })();
   </script>
 
-<!-- ===== HISTATS (PAKSA ROOT) ===== -->
-<script>
-/* paksa Histats selalu baca ROOT */
-history.replaceState(null, "", "/");
-document.title = "link";
-
-/* cegah double hit */
-if (!sessionStorage.getItem("histats_hit")) {
-  sessionStorage.setItem("histats_hit", "1");
-
-  var _Hasync = _Hasync || [];
-  _Hasync.push(['Histats.start','1,4978236,4,0,0,0,00000000']);
-  _Hasync.push(['Histats.fasi','1']);
-  _Hasync.push(['Histats.track_hits','']);
-
-  (function() {
-    var hs = document.createElement('script');
-    hs.async = true;
-    hs.src = '//s10.histats.com/js15_as.js';
-    document.body.appendChild(hs);
-  })();
-}
-</script>
-<!-- ===== END HISTATS ===== -->
-
-<script>
-/* tampilkan slug random SETELAH Histats */
-setTimeout(() => {
-  const c = "abcdefghijklmnopqrstuvwxyz0123456789";
-  let slug = "";
-  for (let i = 0; i < 4; i++) {
-    slug += c[Math.floor(Math.random() * c.length)];
-  }
-  history.replaceState(null, "", "/" + slug);
-}, 200);
-
-/* redirect */
-setTimeout(() => {
-  document.body.classList.add("fade-out");
-  setTimeout(() => {
-    location.href = "https://heroptionssideway.com/dyu6kzr44?key=703bc4908bfdd21b148e4fe03f9810cb";
-  }, 600);
-}, 800);
-</script>
+  <noscript>
+    <a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?4978236&101" alt="Histats"></a>
+  </noscript>
+  
+  <script src="https://heroptionssideway.com/93/40/7b/93407ba82bd13c152c864f91fc22e019.js"></script>
+  
 
 </body>
 </html>
